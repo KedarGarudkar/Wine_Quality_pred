@@ -4,21 +4,21 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from flask_cors import CORS
 
-app = Flask(__name__)
+application = Flask(__name__)
 RFscalar = pickle.load(open("New_RF_standardScalar.sav", 'rb'))
 RFmodel = pickle.load(open("New_RF_modelForPrediction.sav", 'rb'))
 RFpca_model = pickle.load(open("new_RF_pca_model.sav", 'rb'))
 
-CORS(app)
-app.config['DEBUG'] = True
+CORS(application)
+application.config['DEBUG'] = True
 
 
-@app.route('/',methods=['GET'])
+@application.route('/',methods=['GET'])
 def Home():
     return render_template('index.html')
 
 standard_to = StandardScaler()
-@app.route("/", methods=['POST'])
+@application.route("/", methods=['POST'])
 def predict():
     if request.method == 'POST':
         resp = request.form
@@ -54,4 +54,4 @@ def predict():
     else:
         return render_template('index.html')
 if __name__=="__main__":
-    app.run(debug=True)
+    application.run(debug=True)
